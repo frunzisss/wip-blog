@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.0",
+    "formidable": "^1.2.2",
     "showdown": "^1.9.1"
   },
   "type": "module",

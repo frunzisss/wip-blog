@@ -1,7 +1,8 @@
 import express from "express";
 import { config } from "./config.js";
-import fs, { readdirSync } from "fs";
+import fs from "fs";
 import { mapTitleToKebabCase } from "./utils.js";
+import fileUpload from "express-fileupload";
 
 // probably converting from markdown to html is complicated, so I didn't want to reinvent the wheel, I just used this library that I found
 import showdown from "showdown";
@@ -12,12 +13,12 @@ const app = express();
 const {
   port,
   ARTICLES_PATH,
-  DEFAULT_ROUTE_MESSAGE,
   BLOG_ROUTE,
   DEFAULT_ROUTE,
   NOT_FOUND_ROUTE,
   NOT_FOUND_ROUTE_MESSAGE,
-  POSTS_ROUTE
+  POSTS_ROUTE,
+  ADD_ROUTE
 } = config;
 // articles is the object where we keep the mapping between the original file name and the kebab-case one
 const articles = {};
@@ -39,10 +40,13 @@ const readFiles = (() => {
 })();
 
 const getAllPosts = (res) => {
-    fs.readdir(ARTICLES_PATH, (err, files) => {
-        const html = `<html>${files.map(file=> `<li><a href="/blog/${mapTitleToKebabCase(file)}">${file}</a></li>`)}</html>`;
-        res.send(html);
-    });
+  fs.readdir(ARTICLES_PATH, (err, files) => {
+    const html = `<html>${files.map(
+      (file) =>
+        `<li><a href="/blog/${mapTitleToKebabCase(file)}">${file}</a></li>`
+    )}</html>`;
+    res.send(err || html);
+  });
 };
 
 const resetError = () => {
@@ -54,13 +58,47 @@ fs.watch(ARTICLES_PATH, (eventType, fileName) => {
   articles[mapTitleToKebabCase(fileName)] = fileName;
 });
 
+app.use((req, res, next) => {
+  res.set("Cache-Control", "no-store");
+  next();
+});
+
+app.use(
+  fileUpload({
+    createParentPath: true,
+  })
+);
+
 app.get(DEFAULT_ROUTE, (req, res) => {
-  res.send(error || `<html><a href="/posts">See all available posts!</a></html>`);
+  if (error) {
+    res.send(error);
+  } else {
+    res.sendFile("./htmlPages/default.html", { root: "./" });
+  }
   resetError();
 });
 
+app.get(ADD_ROUTE, (req, res) => {
+  if (error) {
+    res.send(error);
+  } else {
+    res.sendFile("./htmlPages/addNewFile.html", { root: "./" });
+  }
+  resetError();
+});
+
+app.post(ADD_ROUTE, (req, res) => {
+  fs.writeFile(
+    `${ARTICLES_PATH}/${req.files.upload.name}`,
+    req.files.upload.data,
+    () => {
+      res.redirect(POSTS_ROUTE);
+    }
+  );
+});
+
 app.get(POSTS_ROUTE, (req, res) => {
-    getAllPosts(res);
+  getAllPosts(res);
 });
 
 app.get(NOT_FOUND_ROUTE, (req, res) => {
