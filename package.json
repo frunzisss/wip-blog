@@ -1,0 +1,13 @@
+{
+  "name": "wip-blog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Adrian Frunza <adrian.frunza@softvision.ro>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

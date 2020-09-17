@@ -1,0 +1,38 @@
+Arguments: 
+  /home/adrian.frunza/.nvm/versions/node/v12.18.3/bin/node /usr/local/bin/yarn add express
+
+PATH: 
+  /home/adrian.frunza/.nvm/versions/node/v12.18.3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  12.18.3
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /home/adrian.frunza/wip-blog/package.json: Unexpected token } in JSON at position 178
+      at JSON.parse (<anonymous>)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "wip-blog",
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": "Adrian Frunza <adrian.frunza@softvision.ro>",
+    "license": "MIT",
+    "scripts": "node server.js",
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
