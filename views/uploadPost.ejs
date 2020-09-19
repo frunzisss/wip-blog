@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Simple Upload Example</title>
 </head>
+
 <body>
-<form action="<%=UPLOAD_ROUTE%>" enctype="multipart/form-data" method="post">
-    <input type="file" onchange="onChange()" accept=".md" name="upload">
-    <input disabled id="submitButton" type="submit" value="Upload">
-</form>
+    <form action="<%=UPLOAD_ROUTE%>" enctype="multipart/form-data" method="post">
+        <input type="file" onchange="onChange()" accept=".md" name="upload">
+        <input disabled id="submitButton" type="submit" value="Upload">
+    </form>
 </body>
 <script>
     onChange = (evt) => {
         document.getElementById('submitButton').removeAttribute('disabled');
     }
 </script>
+
 </html>
