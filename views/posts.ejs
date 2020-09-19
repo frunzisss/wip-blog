@@ -6,8 +6,8 @@
 </head>
 
 <body>
-    <% files.forEach(file => { %>
-    <li><a href="blog/<%=file%>"><%=file%></a></li>
+    <% Object.keys(posts).forEach(post => { %>
+    <li><a href="blog/<%=post%>"><%=post%></a></li>
     <%}) %>
 </body>
 

@@ -15,7 +15,7 @@ export const initApp = (app) => {
       
       app.set("view engine", "ejs"); 
       
-      app.set("views", "./htmlPages"); 
+      app.set("views", "./views"); 
       
       app.use(bodyParser.urlencoded({ extended: false })); 
 };
