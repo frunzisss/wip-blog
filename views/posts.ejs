@@ -6,8 +6,9 @@
 </head>
 
 <body>
-    <% Object.keys(posts).forEach(post => { %>
-    <li><a href="blog/<%=post%>"><%=post%></a></li>
+    <% Object.keys(posts).forEach(post => { 
+        const title = posts[post];%>
+    <li><a href="blog/<%=post%>"><%=title%></a></li>
     <%}) %>
 </body>
 
